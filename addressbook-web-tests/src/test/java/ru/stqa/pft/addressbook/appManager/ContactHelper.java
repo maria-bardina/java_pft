@@ -2,7 +2,6 @@ package ru.stqa.pft.addressbook.appManager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.stqa.pft.addressbook.ContactData;
 
 /**
  * Created by marru on 04.06.2017.

@@ -6,7 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 /**
  * Created by marru on 04.06.2017.
  */
-public class ContactHelper extends HelperBase{
+public class ContactHelper extends HelperBase {
 
 
     public ContactHelper(FirefoxDriver wd) {
@@ -34,10 +34,11 @@ public class ContactHelper extends HelperBase{
     }
 
     public void deleteSelectedContacts() {
-        click(By.name("delete"));
+        click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
     }
 
     public void selectContact() {
         click(By.name("selected[]"));
     }
+
 }

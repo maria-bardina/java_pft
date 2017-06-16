@@ -2,8 +2,12 @@ package ru.stqa.pft.addressbook.appManager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
-import ru.stqa.pft.addressbook.appManager.ContactData;
+import org.openqa.selenium.WebElement;
+import ru.stqa.pft.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by marru on 04.06.2017.
  */
@@ -20,7 +24,7 @@ public class ContactHelper extends HelperBase {
         click(By.name("submit"));
     }
 
-    public void fillContactInforation(ContactData contactData, boolean creation) {
+    public void fillContactInforation(ContactData contactData) {
         type(By.name("firstname"), contactData.getName());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("company"), contactData.getCompany());
@@ -38,11 +42,11 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void initContactModification(){
+    public void initContactModification() {
         click(By.xpath("//tr[@name='entry']/td[8]/a/img"));
     }
 
@@ -50,13 +54,13 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form[1]/input[22]"));
     }
 
-    public boolean isThereAContact(){
+    public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
     public void createContact(ContactData contact) {
         initContactCreation();
-        fillContactInforation(contact, true);
+        fillContactInforation(contact);
         submitContactCreation();
         returnToContactPage();
     }
@@ -67,5 +71,18 @@ public class ContactHelper extends HelperBase {
 
     public int getContactCount() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("ПРОВЕРИТЬ ЭЛЕМЕНТ!!"));
+        for (WebElement element : elements) {
+            String name = element.getText();
+            //ЧТО ЭТО ВООБЩЕ ЗА ХЕРНЯЯЯЯЯ??????
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            ContactData contact = new ContactData(id, name, null, null, null, null, null, null);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }

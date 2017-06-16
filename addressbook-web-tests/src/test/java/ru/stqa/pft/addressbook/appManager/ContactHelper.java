@@ -75,12 +75,12 @@ public class ContactHelper extends HelperBase {
 
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("ПРОВЕРИТЬ ЭЛЕМЕНТ!!"));
+        List<WebElement> elements = wd.findElements(By.cssSelector("td.center"));
         for (WebElement element : elements) {
             String name = element.getText();
             //ЧТО ЭТО ВООБЩЕ ЗА ХЕРНЯЯЯЯЯ??????
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData(id, name, null, null, null, null, null, null);
+
+            ContactData contact = new ContactData( name, null, null, null, null, null, null);
             contacts.add(contact);
         }
         return contacts;

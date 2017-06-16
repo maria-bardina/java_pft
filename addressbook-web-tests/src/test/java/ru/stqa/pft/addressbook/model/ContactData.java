@@ -64,4 +64,13 @@ public class ContactData {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
+
 }

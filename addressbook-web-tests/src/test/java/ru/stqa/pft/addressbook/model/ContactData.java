@@ -22,8 +22,11 @@ public class ContactData {
         this.mobile = mobile;
         this.email = email;
     }
+
+
     public ContactData(String name, String lastname, String company, String address, String home, String mobile, String email) {
         this.id = id;
+
         this.name = name;
         this.lastname = lastname;
         this.company = company;
@@ -71,6 +74,23 @@ public class ContactData {
                 "name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        return result;
     }
 
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public class GroupModificationTests extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions{
+    public void ensurePreconditions(){
         app.getNavigationHelper().gotoGroupPage();
         if (! app.getGroupHelper().isThereAGroup()){
             app.getGroupHelper().createGroup(new GroupData("mashatest", "headertest", "footertest"));
@@ -25,6 +25,7 @@ public class GroupModificationTests extends TestBase {
 
     public void testGroupModificarion() {
         List<GroupData> before = app.getGroupHelper().getGroupList();
+
         int index = before.size()-1;
         GroupData group = new GroupData(before.get(index).getId(),"mashatest1", "headertest1", "footertest1");
         app.getGroupHelper().modifyGroup(index, group);

@@ -64,6 +64,14 @@ public class ContactHelper extends HelperBase {
         submitContactCreation();
         returnToContactPage();
     }
+    public void modifyContact(int index, ContactData contact) {
+        selectContact(index);
+        initContactModification();
+        fillContactInforation(contact);
+        submitContactModification();
+        isAlertPresent();
+        returnToHomePage();
+    }
 
     private void returnToContactPage() {
         click(By.linkText("home"));

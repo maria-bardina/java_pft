@@ -2,27 +2,15 @@ package ru.stqa.pft.addressbook.model;
 
 public class GroupData {
 
-    private int id;
-    private final String groupName;
-    private final String header;
-    private final String footer;
+    private int id = Integer.MAX_VALUE;
+    private String Name;
+    private String header;
+    private String footer;
 
 
-    public GroupData(String groupName, String header, String footer) {
-        this.id = Integer.MAX_VALUE;
-        this.groupName = groupName;
-        this.header = header;
-        this.footer = footer;
-    }
-    public GroupData(int id, String groupName, String header, String footer) {
-        this.id = id;
-        this.groupName = groupName;
-        this.header = header;
-        this.footer = footer;
-    }
 
     public String getGroupName() {
-        return groupName;
+        return Name;
     }
 
     public String getHeader() {
@@ -33,7 +21,26 @@ public class GroupData {
         return footer;
     }
 
+    public GroupData withId(int id) {
+        this.id = id;
+        return this;
+    }
 
+    public GroupData withName(String Name) {
+
+        this.Name = Name;
+        return this;
+    }
+
+    public GroupData withHeader(String header) {
+        this.header = header;
+        return this;
+    }
+
+    public GroupData withFooter(String footer) {
+        this.footer = footer;
+        return this;
+    }
 
     public int getId() {
         return id;
@@ -42,7 +49,7 @@ public class GroupData {
     public String toString() {
         return "GroupData{" +
                 "id='" + id + '\'' +
-                ", groupName='" + groupName + '\'' +
+                ", groupName='" + Name + '\'' +
                 '}';
     }
     @Override
@@ -52,12 +59,12 @@ public class GroupData {
 
         GroupData groupData = (GroupData) o;
 
-        return groupName != null ? groupName.equals(groupData.groupName) : groupData.groupName == null;
+        return Name != null ? Name.equals(groupData.Name) : groupData.Name == null;
     }
 
     @Override
     public int hashCode() {
-        return groupName != null ? groupName.hashCode() : 0;
+        return Name != null ? Name.hashCode() : 0;
     }
 
 }

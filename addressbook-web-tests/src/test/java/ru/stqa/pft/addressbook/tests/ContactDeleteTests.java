@@ -15,9 +15,7 @@ public class ContactDeleteTests extends TestBase{
     @BeforeMethod
     public void ensurePreconditions() {
         if (! app.getContactHelper().isThereAContact()){
-            app.getContactHelper().createContact(new ContactData
-                    ("mashatest", "mashatest1", "testcompany", "testaddress",
-                            "1", "79999999990", "test@test.com"));
+            app.getContactHelper().createContact(new ContactData().withName("name").withLastname("Lastname"));
         }
     }
 

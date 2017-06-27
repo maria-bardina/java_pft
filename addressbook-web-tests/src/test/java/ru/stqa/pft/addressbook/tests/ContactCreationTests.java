@@ -6,18 +6,21 @@ import org.testng.annotations.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.List;
+import java.util.Set;
 
 public class ContactCreationTests extends TestBase {
-    FirefoxDriver wd;
 
 
     @Test
-    public void tetContactCreation() {
-        List<ContactData> before = app.getContactHelper().getContactList();
-        ContactData contact = new ContactData().withId(before.get(before.size()-1).getId()).withName("Name").withLastname("Lastname");
-        app.getContactHelper().createContact(contact);
-        List<ContactData>after = app.getContactHelper().getContactList();
+    public void testContactCreation() {
+        Set<ContactData> before = app.сontact().all();
+        ContactData contact = new ContactData().withName("Name").withLastname("Lastname");
+        app.сontact().create(contact);
+        Set<ContactData>after = app.сontact().all();
         Assert.assertEquals(after.size(), before.size()+1);
+
+        contact.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt());
+        before.add(contact);
+        Assert.assertEquals(before, after);
     }
 }

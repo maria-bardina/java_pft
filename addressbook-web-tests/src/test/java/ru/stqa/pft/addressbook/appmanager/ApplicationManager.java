@@ -1,9 +1,11 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.BrowserType;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,32 +14,36 @@ import java.util.concurrent.TimeUnit;
  */
 public class ApplicationManager {
     private NavigationHelper navigationHelper;
-    FirefoxDriver wd;
+    WebDriver wd;
 
     private GroupHelper groupHelper;
 
-    private SessionHelper sessionHelper;
+    public SessionHelper sessionHelper;
 
-    public static boolean isAlertPresent(FirefoxDriver wd) {
-        try {
-            wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
+    private ContactHelper contactHelper;
+    private String browser;
+
+    public ApplicationManager(String browser) {
+        this.browser = browser;
     }
 
+
     public void init() {
-       wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
-       wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-       wd.get("http://localhost/addressbook/group.php");
+        if (browser.equals(BrowserType.FIREFOX)){
+            wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
+        }else if (browser.equals(BrowserType.CHROME) ){
+            wd = new ChromeDriver();
+        }else if (browser.equals (BrowserType.IE)){
+            wd = new InternetExplorerDriver();
+        }
+       wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+       wd.get("http://localhost/addressbook/");
         groupHelper = new GroupHelper(wd);
+        contactHelper = new ContactHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
         sessionHelper.login("admin", "secret");
     }
-
-
 
     public void stop() {
         wd.quit();
@@ -47,7 +53,13 @@ public class ApplicationManager {
         return groupHelper;
     }
 
+    public ContactHelper getContactHelper(){
+        return contactHelper;
+    }
+
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
     }
+
+
 }

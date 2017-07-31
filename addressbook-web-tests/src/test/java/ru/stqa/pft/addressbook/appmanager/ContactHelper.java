@@ -47,7 +47,8 @@ public class ContactHelper extends HelperBase{
     }
 
     public void initContactModification(int index) {
-        wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).get(index).click();
+        //wd.findElements(By.name("entry")).get(index).findElements(By.tagName("td")).get(7).findElement(By.tagName("img")).click();
+        wd.findElement(By.xpath(String.format("//div[@id='content']/form[2]/table[1]/tbody[1]/tr[%d]/td[8]/a/img", index + 1))).click();
     }
     public void submitContactModification(){
         click(By.xpath("//div[@id='content']/form[1]/input[22]"));
@@ -57,8 +58,8 @@ public class ContactHelper extends HelperBase{
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void deleteContact(int index) {
-        wd.findElements(By.xpath("//div[@id='content']/form[2]/div[2]/input")).get(index).click();
+    public void deleteContact() {
+        click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
     }
     public void submitDeleteContact(){
         wd.switchTo().alert().accept();

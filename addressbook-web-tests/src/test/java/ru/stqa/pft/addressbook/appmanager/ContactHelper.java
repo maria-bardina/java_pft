@@ -47,8 +47,8 @@ public class ContactHelper extends HelperBase{
     }
 
     public void initContactModification(int index) {
-        //wd.findElements(By.name("entry")).get(index).findElements(By.tagName("td")).get(7).findElement(By.tagName("img")).click();
-        wd.findElement(By.xpath(String.format("//div[@id='content']/form[2]/table[1]/tbody[1]/tr[%d]/td[8]/a/img", index + 1))).click();
+        wd.findElements(By.name("entry")).get(index).findElements(By.tagName("td")).get(7).findElement(By.tagName("img")).click();
+        //wd.findElement(By.xpath(String.format("//div[@id='content']/form[2]/table[1]/tbody[1]/tr[%d]/td[8]/a/img", index + 1))).click();
     }
     public void submitContactModification(){
         click(By.xpath("//div[@id='content']/form[1]/input[22]"));
@@ -80,8 +80,10 @@ public class ContactHelper extends HelperBase{
         List <ContactData> contacts = new ArrayList<>();
         List <WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements){
-            String name = element.getText();
-            ContactData contact = new ContactData(name, null, null, null);
+            String id = element.findElement(By.tagName("input")).getAttribute("value");
+            String name = element.findElements(By.tagName("td")).get(2).getText();
+            String lastname = element.findElements(By.tagName("td")).get(1).getText();
+            ContactData contact = new ContactData(id, name, lastname, null, null);
             contacts.add(contact);
         }
         return contacts;

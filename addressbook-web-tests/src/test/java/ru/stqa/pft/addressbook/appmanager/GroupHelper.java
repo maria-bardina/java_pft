@@ -35,16 +35,16 @@ public class GroupHelper extends HelperBase{
         click(By.name("new"));
     }
 
-    public void deleteGroup(int index) {
-        wd.findElements(By.name("delete")).get(index).click();
+    public void deleteGroup() {
+        wd.findElements(By.name("delete")).get(0).click();
     }
 
     public void selectGroup(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void initGroupModification(int index) {
-        wd.findElements(By.name("edit")).get(index).click();
+    public void initGroupModification() {
+        wd.findElements(By.name("edit")).get(0).click();
     }
 
     public void submitGroupModification() {

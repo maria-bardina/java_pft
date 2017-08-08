@@ -16,7 +16,7 @@ public class ContactData {
     }
 
     public ContactData(String name, String lastname, String mobile, String group) {
-        this.id = 0;
+        this.id = Integer.MAX_VALUE;
         this.name = name;
         this.lastname = lastname;
         this.mobile = mobile;
@@ -31,13 +31,6 @@ public class ContactData {
         return lastname;
     }
 
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 
     public String getMobile() {
         return mobile;
@@ -47,6 +40,14 @@ public class ContactData {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,23 +55,20 @@ public class ContactData {
 
         ContactData that = (ContactData) o;
 
-        if (id != that.id) return false;
         return name != null ? name.equals(that.name) : that.name == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return name != null ? name.hashCode() : 0;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getGroup() {
-        return group;
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
 

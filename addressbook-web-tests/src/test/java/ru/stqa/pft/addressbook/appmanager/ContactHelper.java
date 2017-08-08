@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by bardina_md on 27.07.17.
  */
-public class ContactHelper extends HelperBase{
+public class ContactHelper extends HelperBase {
 
     public ContactHelper(WebDriver wd) {
         super(wd);
@@ -50,18 +50,20 @@ public class ContactHelper extends HelperBase{
         wd.findElements(By.name("entry")).get(index).findElements(By.tagName("td")).get(7).findElement(By.tagName("img")).click();
         //wd.findElement(By.xpath(String.format("//div[@id='content']/form[2]/table[1]/tbody[1]/tr[%d]/td[8]/a/img", index + 1))).click();
     }
-    public void submitContactModification(){
+
+    public void submitContactModification() {
         click(By.xpath("//div[@id='content']/form[1]/input[22]"));
     }
 
-    public void selectContact (int index){
+    public void selectContact(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteContact() {
         click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
     }
-    public void submitDeleteContact(){
+
+    public void submitDeleteContact() {
         wd.switchTo().alert().accept();
     }
 
@@ -72,14 +74,22 @@ public class ContactHelper extends HelperBase{
         returnToHomePage();
     }
 
+    public void modify(int index, ContactData contact) {
+        selectContact(index);
+        initContactModification(index);
+        fillContactInforation(contact);
+        submitContactModification();
+        returnToHomePage();
+    }
+
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
     public List<ContactData> getContactList() {
-        List <ContactData> contacts = new ArrayList<>();
-        List <WebElement> elements = wd.findElements(By.name("entry"));
-        for (WebElement element : elements){
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement element : elements) {
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String name = element.findElements(By.tagName("td")).get(2).getText();
             String lastname = element.findElements(By.tagName("td")).get(1).getText();

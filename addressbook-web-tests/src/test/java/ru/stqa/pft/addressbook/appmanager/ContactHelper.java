@@ -39,7 +39,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void returnToHomePage() {
-        click(By.linkText("home page"));
+        click(By.linkText("home"));
     }
 
     public void initContactCreation() {
@@ -82,18 +82,25 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
+    public void delete(int index) {
+        selectContact(index);
+        deleteContact();
+        submitDeleteContact();
+        returnToHomePage();
+    }
+
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String name = element.findElements(By.tagName("td")).get(2).getText();
             String lastname = element.findElements(By.tagName("td")).get(1).getText();
-            ContactData contact = new ContactData(id, name, lastname, null, null);
+            ContactData contact = new ContactData().withId(id).withName(name).withLastname(lastname);
             contacts.add(contact);
         }
         return contacts;

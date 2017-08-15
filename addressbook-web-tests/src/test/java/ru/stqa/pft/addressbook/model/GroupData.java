@@ -59,8 +59,7 @@ public class GroupData {
 
         GroupData groupData = (GroupData) o;
 
-        if (id != groupData.id) return false;
-        return name != null ? name.equals(groupData.name) : groupData.name == null;
+        return id == groupData.id && (name != null ? name.equals(groupData.name) : groupData.name == null);
     }
 
     @Override

@@ -6,10 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by bardina_md on 26.07.17.
@@ -38,7 +35,7 @@ public class GroupHelper extends HelperBase {
         click(By.name("new"));
     }
 
-    public void deleteGroup() {
+    public void submitDeleteGroup() {
         wd.findElements(By.name("delete")).get(0).click();
     }
 
@@ -58,6 +55,7 @@ public class GroupHelper extends HelperBase {
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
+        groupCache = null;
         returnToGroupPage();
 
     }
@@ -67,12 +65,14 @@ public class GroupHelper extends HelperBase {
         initGroupModification();
         fillGroupForm(group);
         submitGroupModification();
+        groupCache = null;
         returnToGroupPage();
     }
 
     public void delete(GroupData group) {
         selectGroupById(group.getId());
-        deleteGroup();
+        submitDeleteGroup();
+        groupCache = null;
         returnToGroupPage();
     }
 

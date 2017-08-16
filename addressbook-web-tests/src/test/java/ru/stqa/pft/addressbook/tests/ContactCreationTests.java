@@ -14,10 +14,10 @@ public class ContactCreationTests extends TestBase {
     public void testContactCreation() {
         app.goTo().homePage();
         Contacts before = app.contact().all();
-        ContactData contact = new ContactData().withName("mashatest22").withLastname("mashatest1").withMobile("9999999");
+        ContactData contact = new ContactData().withName("mashatest22").withLastname("mashatest1").withMobilePhone("9999999");
         app.contact().createContact(contact);
+        assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.contact().all();
-        assertEquals(after.size(), before.size() + 1);
 
         assertThat(after, equalTo(before
                 .withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));

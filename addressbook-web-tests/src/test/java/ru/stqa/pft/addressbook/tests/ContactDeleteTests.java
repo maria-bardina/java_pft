@@ -18,7 +18,7 @@ public class ContactDeleteTests extends TestBase{
     public void ensurePreconditions(){
         app.goTo().homePage();
         if (app.contact().all().size() ==0){
-            app.contact().createContact(new ContactData().withName("mashatest").withLastname("mashatest1").withMobile("9999999"));
+            app.contact().createContact(new ContactData().withName("mashatest").withLastname("mashatest1").withMobilePhone("9999999"));
         }
     }
 
@@ -27,8 +27,8 @@ public class ContactDeleteTests extends TestBase{
         Contacts before = app.contact().all();
         ContactData deletedContact = before.iterator().next();
         app.contact().delete(deletedContact);
+        assertThat(app.contact().count(), equalTo(before.size() - 1));
         Contacts after = app.contact().all();
-        assertEquals(after.size(), before.size() - 1);
 
         assertThat(after, equalTo(before.withoutAdded(deletedContact)));
     }

@@ -1,13 +1,20 @@
 package ru.stqa.pft.addressbook.tests;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,16 +23,22 @@ import static org.testng.Assert.assertEquals;
 public class ContactCreationTests extends TestBase {
 
     @DataProvider
-    public Iterator<Object[]> validContacts(){
-        List<Object[]> list = new ArrayList<>();
-        list.add(new Object[] {new ContactData().withName("Name1").withLastname("Lastname1").withMobilePhone("9991").withAddress("Address1")});
-        list.add(new Object[] {new ContactData().withName("Name2").withLastname("Lastname2").withMobilePhone("9992").withAddress("Address2")});
-        list.add(new Object[] {new ContactData().withName("Name3").withLastname("Lastname3").withMobilePhone("9993").withAddress("Address3")});
-        return list.iterator();
+    public Iterator<Object[]> validContactsFromJson() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/contacts.csv"));
+        String json = "";
+        String line = reader.readLine();
+        while (line !=null){
+            json+=line;
+            line=reader.readLine();
+        }
+        Gson gson = new Gson();
+        List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
+        return contacts.stream().map((c)-> new Object[]{c}).collect(Collectors.toList()).iterator();
+
 
     }
 
-    @Test(dataProvider = "validContacts")
+    @Test(dataProvider = "validContactsFromJson")
     public void testContactCreation(ContactData contact) {
         app.goTo().homePage();
         Contacts before = app.contact().all();

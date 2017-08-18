@@ -1,32 +1,34 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.File;
 
 public class ContactData {
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String name;
+    @Expose
     private String lastname;
+    @Expose
     private String mobile;
     private String group;
+    @Expose
     private String home;
+    @Expose
     private String work;
     private String allPhones;
+    @Expose
     private String email1;
+    @Expose
     private String email2;
+    @Expose
     private String email3;
     private String allEmails;
+    @Expose
     private String address;
     private String allAddress;
-    private File photo;
 
-    public File getPhoto() {
-        return photo;
-    }
-
-    public ContactData withPhoto(File photo) {
-        this.photo = photo;
-        return this;
-    }
 
     public String getName() {
         return name;

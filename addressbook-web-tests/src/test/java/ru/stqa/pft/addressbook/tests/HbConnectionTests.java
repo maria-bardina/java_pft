@@ -17,12 +17,12 @@ import java.util.List;
  */
 public class HbConnectionTests {
 
-    private SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
 
     @BeforeClass
 
 
-    protected void setUp() throws Exception {
+    public static void setUp() throws Exception {
         // A SessionFactory is set up once for an application!
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
@@ -40,33 +40,28 @@ public class HbConnectionTests {
 
 
 
+    @Test
+    public void testHbConnectionTests() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<GroupData> result = session.createQuery("from GroupData where deprecated = '0000-00-00 00:00:00'").list();
+        for (GroupData group : result) {
+            System.out.println(group);
+        }
+        session.getTransaction().commit();
+        session.close();
+    }
+    }
+
 /*    @Test
     public void testHbConnectionTests(){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List <GroupData> result = session.createQuery( "from GroupData" ).list();
-        for ( GroupData group : result ) {
-            System.out.println( group);
-        }
-        session.getTransaction().commit();
-        session.close();
-
-
-
-    }*/
-
-    @Test
-    public void testHbConnectionTests(){
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List <ContactData> result = session.createQuery( "from ContactData" ).list();
-        for ( ContactData contact : result ) {
+        List <ContactData>result = session.createQuery( "from ContactData where deprecated = '0000-00-00 00:00:00'" ).list();
+        for (ContactData contact : result ) {
             System.out.println(contact);
         }
         session.getTransaction().commit();
         session.close();
-
-
-
     }
-}
+}*/

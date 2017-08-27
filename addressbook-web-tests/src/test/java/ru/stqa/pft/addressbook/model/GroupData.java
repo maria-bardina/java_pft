@@ -77,6 +77,7 @@ public class GroupData {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,15 +85,18 @@ public class GroupData {
 
         GroupData groupData = (GroupData) o;
 
-        return id == groupData.id && (name != null ? name.equals(groupData.name) : groupData.name == null);
+        if (id != groupData.id) return false;
+        if (name != null ? !name.equals(groupData.name) : groupData.name != null) return false;
+        if (header != null ? !header.equals(groupData.header) : groupData.header != null) return false;
+        return footer != null ? footer.equals(groupData.footer) : groupData.footer == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (header != null ? header.hashCode() : 0);
+        result = 31 * result + (footer != null ? footer.hashCode() : 0);
         return result;
     }
-
-
 }

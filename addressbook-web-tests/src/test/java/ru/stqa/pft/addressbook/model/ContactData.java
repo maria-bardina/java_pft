@@ -1,22 +1,39 @@
 package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.eclipse.jetty.util.annotation.Name;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
+@Entity
+@Table (name = "addressbook")
 public class ContactData {
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firastname")
     private String name;
     @Expose
+    @Column(name = "lastname")
     private String lastname;
     @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobile;
+    @Transient
     private String group;
     @Expose
+    @Column(name = "home")
+    @Type(type = "text")
     private String home;
     @Expose
+    @Column(name = "work")
+    @Type(type = "text")
     private String work;
+    @Transient
     private String allPhones;
     @Expose
     private String email1;
@@ -27,6 +44,7 @@ public class ContactData {
     private String allEmails;
     @Expose
     private String address;
+    @Transient
     private String allAddress;
 
 

@@ -23,29 +23,30 @@ public class GroupCreationTests extends TestBase {
 
     @DataProvider
     public Iterator<Object[]> validGroupsFromJson() throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/groups.json"))){
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/groups.json"))) {
             String json = "";
             String line = reader.readLine();
-            while (line !=null){
-                json+=line;
-                line=reader.readLine();
+            while (line != null) {
+                json += line;
+                line = reader.readLine();
             }
             Gson gson = new Gson();
-            List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());
-            return groups.stream().map((g)-> new Object[]{g}).collect(Collectors.toList()).iterator();
+            List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
+            }.getType());
+            return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
         }
     }
 
     @Test(dataProvider = "validGroupsFromJson")
     public void testsGroupCreation(GroupData group) {
-            app.goTo().groupPage();
-            Groups before = app.group().all();
-            app.group().create(group);
-            assertThat(app.group().count(), equalTo(before.size() + 1));
-            Groups after = app.group().all();
+        app.goTo().groupPage();
+        Groups before = app.db().groups();
+        app.group().create(group);
+        assertThat(app.group().count(), equalTo(before.size() + 1));
+        Groups after = app.db().groups();
 
-            assertThat(after, equalTo(before
-                    .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+        assertThat(after, equalTo(before
+                .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
 
-        }
     }
+}

@@ -12,11 +12,11 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by bardina_md on 27.07.17.
  */
-public class ContactDeleteTests extends TestBase{
+public class ContactDeleteTests extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions(){
-        if (app.db().conacts().size() ==0) {
+    public void ensurePreconditions() {
+        if (app.db().conacts().size() == 0) {
             app.goTo().homePage();
             app.contact().createContact(new ContactData().withName("mashatest").withLastname("mashatest1").withMobilePhone("9999999"));
         }

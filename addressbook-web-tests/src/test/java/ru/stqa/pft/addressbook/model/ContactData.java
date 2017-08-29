@@ -22,36 +22,36 @@ public class ContactData {
     @Expose
     @Column(name = "mobile")
     @Type(type = "text")
-    private String mobile;
+    private String mobile = "";
     @Transient
     private String group;
     @Expose
     @Column(name = "home")
     @Type(type = "text")
-    private String home;
+    private String home= "";
     @Expose
     @Column(name = "work")
     @Type(type = "text")
-    private String work;
+    private String work= "";
     @Transient
     private String allPhones;
     @Expose
     @Type(type = "text")
     @Column(name = "email")
-    private String email1;
+    private String email1= "";
     @Expose
     @Type(type = "text")
     @Column(name = "email2")
-    private String email2;
+    private String email2= "";
     @Expose
     @Type(type = "text")
     @Column(name = "email3")
-    private String email3;
+    private String email3= "";
     @Transient
     private String allEmails;
     @Expose
     @Type(type = "text")
-    private String address;
+    private String address= "";
     @Transient
     private String allAddress;
 

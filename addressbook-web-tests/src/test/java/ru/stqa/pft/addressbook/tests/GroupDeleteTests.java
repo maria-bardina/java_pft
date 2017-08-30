@@ -12,7 +12,7 @@ import static org.testng.Assert.assertEquals;
 public class GroupDeleteTests extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions(){
+    public void ensureGroupPreconditions(){
         if (app.db().groups().size() ==0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("mashatest"));

@@ -2,10 +2,13 @@ package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
 import org.eclipse.jetty.util.annotation.Name;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table (name = "addressbook")
@@ -23,8 +26,6 @@ public class ContactData {
     @Column(name = "mobile")
     @Type(type = "text")
     private String mobile = "";
-    @Transient
-    private String group;
     @Expose
     @Column(name = "home")
     @Type(type = "text")
@@ -54,6 +55,13 @@ public class ContactData {
     private String address= "";
     @Transient
     private String allAddress;
+
+
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable (name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<>();
+
 
 
     public String getName() {
@@ -177,9 +185,11 @@ public class ContactData {
         return this;
     }
 
-    public String getGroup() {
-        return group;
+
+    public Groups getGroups() {
+        return new Groups(groups);
     }
+
 
     @Override
     public String toString() {
@@ -199,7 +209,6 @@ public class ContactData {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
         if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
-        if (group != null ? !group.equals(that.group) : that.group != null) return false;
         if (home != null ? !home.equals(that.home) : that.home != null) return false;
         if (work != null ? !work.equals(that.work) : that.work != null) return false;
         if (allPhones != null ? !allPhones.equals(that.allPhones) : that.allPhones != null) return false;
@@ -217,7 +226,6 @@ public class ContactData {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
         result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
-        result = 31 * result + (group != null ? group.hashCode() : 0);
         result = 31 * result + (home != null ? home.hashCode() : 0);
         result = 31 * result + (work != null ? work.hashCode() : 0);
         result = 31 * result + (allPhones != null ? allPhones.hashCode() : 0);

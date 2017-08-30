@@ -1,6 +1,0 @@
-8947 [main] INFO  r.s.pft.addressbook.tests.TestBase - Start testtestsGroupCreationwith parameters[GroupData{id=2147483647, name='test 0'}]
-12242 [main] INFO  r.s.pft.addressbook.tests.TestBase - Stop testtestsGroupCreation
-12244 [main] INFO  r.s.pft.addressbook.tests.TestBase - Start testtestsGroupCreationwith parameters[GroupData{id=2147483647, name='test 1'}]
-14280 [main] INFO  r.s.pft.addressbook.tests.TestBase - Stop testtestsGroupCreation
-14283 [main] INFO  r.s.pft.addressbook.tests.TestBase - Start testtestsGroupCreationwith parameters[GroupData{id=2147483647, name='test 2'}]
-17014 [main] INFO  r.s.pft.addressbook.tests.TestBase - Stop testtestsGroupCreation

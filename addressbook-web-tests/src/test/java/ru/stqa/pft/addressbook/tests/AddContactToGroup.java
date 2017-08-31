@@ -6,6 +6,8 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import static org.testng.Assert.assertEquals;
+
 /**
  * Created by bardina_md on 30.08.17.
  */
@@ -31,7 +33,8 @@ public class AddContactToGroup extends TestBase {
         Contacts before = app.db().contacts();
         ContactData addContact =  before.iterator().next();
         app.contact().contactToGroup(addContact);
-
-
+        Contacts after = app.db().contacts();
+        ContactData next = after.iterator().next();
+        assertEquals(next.getGroups().size(), 1);
     }
 }

@@ -79,6 +79,7 @@ public class ContactHelper extends HelperBase {
     }
     private void selectGroup(){
         click(By.name("group"));
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText("[all]");
         new Select(wd.findElement(By.name("group"))).selectByIndex(2);
     }
     private void submitRemove(){

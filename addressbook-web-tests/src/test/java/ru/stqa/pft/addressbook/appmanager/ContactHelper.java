@@ -15,11 +15,11 @@ import java.util.List;
  */
 public class ContactHelper extends HelperBase {
 
-    public ContactHelper(WebDriver wd) {
+    ContactHelper(WebDriver wd) {
         super(wd);
     }
 
-    public void fillContactInforation(ContactData contactData) {
+    private void fillContactInforation(ContactData contactData) {
         type(By.name("firstname"), contactData.getName());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("mobile"), contactData.getMobilePhone());
@@ -34,48 +34,55 @@ public class ContactHelper extends HelperBase {
         }*/
     }
 
-    public void submitContactCreation() {
+    private void submitContactCreation() {
         wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     }
 
-    public void returnToHomePage() {
+    private void returnToHomePage() {
         click(By.linkText("home"));
     }
 
-    public void initContactCreation() {
+    private void initContactCreation() {
         click(By.linkText("add new"));
     }
 
-    public void initContactModification(int id) {
+    private void initContactModification(int id) {
         wd.findElement(By.cssSelector("a[href='edit.php?id="+id+"']")).click();
     }
 
-    public void submitContactModification() {
+    private void submitContactModification() {
         click(By.xpath("//div[@id='content']/form[1]/input[22]"));
     }
 
-    public void selectContactById(int id) {
+    private void selectContactById(int id) {
         wd.findElement(By.cssSelector("input[value='" +id+ "']")).click();
     }
 
-    public void deleteContact() {
+    private void deleteContact() {
         click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
     }
 
-    public void submitDeleteContact() {
+    private void submitDeleteContact() {
         wd.switchTo().alert().accept();
     }
 
-    public void chooseGroup(){
+    private void chooseGroup(){
         click(By.name("to_group"));
         new Select(wd.findElement(By.name("to_group"))).selectByIndex(0);
         //wd.findElement(By.cssSelector("option[value=\"" +id+"\"]")).click();
     }
-    public void addContactToGroup(){
+    private void addContactToGroup(){
         click(By.name("add"));
     }
-    public void goToAddedGroup(){
+    private void goToAddedGroup(){
         click(By.partialLinkText("group page"));
+    }
+    private void selectGroup(){
+        click(By.name("group"));
+        new Select(wd.findElement(By.name("group"))).selectByIndex(2);
+    }
+    private void submitRemove(){
+        click(By.name("remove"));
     }
 
     public void createContact(ContactData contact) {
@@ -110,6 +117,13 @@ public class ContactHelper extends HelperBase {
         addContactToGroup();
         goToAddedGroup();
 
+    }
+
+    public void removeContactFromGroup(ContactData contact){
+        selectGroup();
+        selectContactById(contact.getId());
+        submitRemove();
+        goToAddedGroup();
     }
 
     public boolean isThereAContact() {

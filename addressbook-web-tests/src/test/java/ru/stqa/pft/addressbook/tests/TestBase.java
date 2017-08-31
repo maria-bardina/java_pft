@@ -65,7 +65,7 @@ public class TestBase {
 
     void verifyContactListInUi(){
         if (Boolean.getBoolean("verivyUI")){
-            Contacts dbContacts= app.db().conacts();
+            Contacts dbContacts= app.db().contacts();
             Contacts uiContacts= app.contact().all();
             assertThat(uiContacts, equalTo(dbContacts.stream()
                     .map((g)-> new ContactData().withId(g.getId()).withName(g.getName()))

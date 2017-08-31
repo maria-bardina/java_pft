@@ -20,11 +20,9 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
     private Properties properties;
     private NavigationHelper navigationHelper;
-    WebDriver wd;
+    private WebDriver wd;
 
     private GroupHelper groupHelper;
-
-    public SessionHelper sessionHelper;
 
     private ContactHelper contactHelper;
     private String browser;
@@ -54,7 +52,7 @@ public class ApplicationManager {
         groupHelper = new GroupHelper(wd);
         contactHelper = new ContactHelper(wd);
         navigationHelper = new NavigationHelper(wd);
-        sessionHelper = new SessionHelper(wd);
+        SessionHelper sessionHelper = new SessionHelper(wd);
         sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     }
 

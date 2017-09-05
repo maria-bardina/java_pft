@@ -6,6 +6,8 @@ import ru.stqa.pft.mantis.appmanager.HttpSession;
 
 import java.io.IOException;
 
+import static org.testng.AssertJUnit.assertTrue;
+
 /**
  * Created by bardina_md on 04.09.17.
  */
@@ -14,7 +16,7 @@ public class LoginTests extends TestBase {
     @Test
     public void testLogin() throws IOException{
         HttpSession session = app.newSession();
-        Assert.assertTrue(session.login("administrator", "root"));
-        org.testng.Assert.assertTrue(session.isLoggedInAs("administrator"));
+        assertTrue(session.login("administrator", "root"));
+        assertTrue(session.isLoggedInAs("administrator"));
     }
 }

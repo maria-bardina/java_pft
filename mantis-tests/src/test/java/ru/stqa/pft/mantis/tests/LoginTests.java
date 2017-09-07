@@ -1,6 +1,5 @@
 package ru.stqa.pft.mantis.tests;
 
-import org.junit.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.appmanager.HttpSession;
 

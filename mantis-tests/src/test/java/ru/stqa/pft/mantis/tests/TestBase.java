@@ -2,6 +2,7 @@ package ru.stqa.pft.mantis.tests;
 
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.mantis.appmanager.ApplicationManager;
 
@@ -20,7 +21,7 @@ public class TestBase {
     @BeforeSuite
     public void setUp() throws Exception {
         app.init();
-        app.ftp().upload(new File("src/test/resurses/config_inc.php"), "config_inc.php", "config_inc.php.bak");
+        app.ftp().upload(new File("src/test/resources/config_inc.php"), "config_inc.php", "config_inc.php.bak");
     }
 
     @AfterSuite

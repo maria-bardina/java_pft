@@ -3,8 +3,8 @@ package ru.stqa.pft.mantis.appmanager;
 import org.apache.commons.net.telnet.TelnetClient;
 import ru.stqa.pft.mantis.model.MailMessage;
 
-import javax.mail.Session;
-import javax.mail.Store;
+import javax.mail.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -73,12 +73,59 @@ public class JamesHelper {
         readUntil ("Password");
         write(password);
 
-        readUntil ("Welcome"+login+". HELP for lost of commands")
+        readUntil ("Welcome"+login+". HELP for lost of commands");
 
     }
 
 
-    public List<MailMessage> waitForMail(String user, String password, int i) {
+    private String readUntil(String pattern) {
+        try {
+            char lastChar = pattern.charAt(pattern.length()-1);
+            StringBuffer sb = new StringBuffer();
+            char ch = (char) in.read();
+            while (true){
+                System.out.println(ch);
+                sb.append(ch);
+                if (ch==lastChar){
+                    if (sb.toString().endsWith(pattern)){
+                        return sb.toString();
+                    }
+                }
+                ch=(char) in.read();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
+    }
+
+    private void write (String value){
+        try{
+            out.println(value);
+            out.flush();
+            System.out.println(value);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void closeTelnetSession(){
+        write("quit");
+    }
+
+    public void drainEmail (String username, String password) throws MessagingException {
+        Folder inbox = openInbox (username,password);
+        for (Message message : inbox.getMessages()){
+            message.setFlag(Flags.Flag.DELETED,true);
+        }
+        closeFolder(inbox);
+    }
+
+    private Folder openInbox(String username, String password) {
+    }
+
+    private void closeFolder(Folder folder) throws MessagingException {
+        folder.close(true);
+        store.close();
     }
 }

@@ -33,6 +33,15 @@ public class JamesHelper {
         mailSession = Session.getDefaultInstance(System.getProperties());
     }
 
+    public static MailMessage toModelMail(Message m) {
+        try {
+            return new MailMessage(m.getAllRecipients()[0].toString(), (String) m.getContent());
+        } catch (MessagingException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean doesUserExit(String name) {
         initTelnetSession();
         write("verify" + name);
@@ -48,14 +57,12 @@ public class JamesHelper {
         closeTelnetSession();
     }
 
-
     public void deleteUser(String name) {
         initTelnetSession();
         write("deluser" + name);
         String result = readUntil("User" + name + "deluser");
         closeTelnetSession();
     }
-
 
     private void initTelnetSession() {
         mailserver = app.getProperty("mailserver.host");
@@ -80,7 +87,6 @@ public class JamesHelper {
         readUntil("Welcome " + login + ". HELP for a list of commands");
 
     }
-
 
     private String readUntil(String pattern) {
         try {
@@ -137,38 +143,28 @@ public class JamesHelper {
     public List<MailMessage> waitForMail(String username, String password, long timeout) throws MessagingException {
         long now = System.currentTimeMillis();
         while (System.currentTimeMillis() < now + timeout) {
-        List<MailMessage>allMail = getAllMail(username, password);
-        if (allMail.size() > 0) {
-            return allMail;
-        }
-        try {
-            {
-                Thread.sleep(1000);
+            List<MailMessage> allMail = getAllMail(username, password);
+            if (allMail.size() > 0) {
+                return allMail;
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            try {
+                {
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        }
-        throw new Error ("No mail:(");
+        throw new Error("No mail:(");
     }
 
     private List<MailMessage> getAllMail(String username, String password) throws MessagingException {
         Folder inbox = openInbox(username, password);
-        List <MailMessage>message= Stream.of(inbox.getMessages()).map(JamesHelper::toModelMail)
+        List<MailMessage> message = Stream.of(inbox.getMessages()).map(JamesHelper::toModelMail)
                 .collect(Collectors.toList());
         closeFolder(inbox);
         return message;
     }
-
-    public static MailMessage toModelMail(Message m) {
-        try {
-            return new MailMessage(m.getAllRecipients()[0].toString(), (String) m.getContent());
-        } catch (MessagingException | IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 
     private void closeFolder(Folder folder) throws MessagingException {
         folder.close(true);

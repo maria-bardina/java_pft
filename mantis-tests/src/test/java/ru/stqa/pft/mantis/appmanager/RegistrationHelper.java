@@ -6,17 +6,17 @@ import org.openqa.selenium.WebDriver;
 /**
  * Created by marru on 05.09.2017.
  */
-public class RegistrationHelper extends HelperBase{
+public class RegistrationHelper extends HelperBase {
 
-    public RegistrationHelper (ApplicationManager app){
+    public RegistrationHelper(ApplicationManager app) {
         super(app);
     }
 
     public void start(String username, String email) {
         wd.get(app.getProperty("web.baseUrl") + "/signup_page.php");
-    type(By.name("username"),username);
-    type(By.name("email"),email);
-    click(By.cssSelector("input[value='Зарегистрироваться']"));
+        type(By.name("username"), username);
+        type(By.name("email"), email);
+        click(By.cssSelector("input[value='Зарегистрироваться']"));
 
     }
 

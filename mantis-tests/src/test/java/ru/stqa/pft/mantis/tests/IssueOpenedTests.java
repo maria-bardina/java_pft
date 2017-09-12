@@ -10,4 +10,9 @@ public class IssueOpenedTests extends TestBase{
     public void testIfOpened() {
         skipIfNotFixed(1);
     }
+
+    @Test
+    public void testIfOpenedBugify() {
+        skipIfNotFixedBugify(1);
+    }
 }

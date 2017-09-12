@@ -52,4 +52,9 @@ public class SoapHelper {
                 .withProject(new Project().withId(createdIssueData.getProject().getId().intValue()).withName(createdIssueData.getProject().getName()));
 
     }
+
+    public boolean isIssueOpened(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+        IssueData issueData = getMantisConnect().mc_issue_get("administrator", "root", BigInteger.valueOf(issueId));
+        return !(issueData.getStatus().getName().equals("closed") || issueData.getStatus().getName().equals("resolved"));
+    }
 }

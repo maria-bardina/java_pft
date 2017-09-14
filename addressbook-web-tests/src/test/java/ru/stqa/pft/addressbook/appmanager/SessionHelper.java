@@ -13,10 +13,10 @@ public class SessionHelper extends HelperBase{
         super(wd);
     }
 
-    public void login(String username, String password) {
+    public void login(String host, String username, String password) {
         type(By.name("user"), username);
         type(By.name("pass"), password);
         click(By.xpath("//form[@id='LoginForm']/input[3]"));
-        wd.get("http://localhost/addressbook");
+        wd.get(host);
     }
 }

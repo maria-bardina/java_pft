@@ -64,7 +64,7 @@ public class ApplicationManager {
         contactHelper = new ContactHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         SessionHelper sessionHelper = new SessionHelper(wd);
-        sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
+        sessionHelper.login(properties.getProperty("web.baseUrl"),properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     }
 
     public void stop() {

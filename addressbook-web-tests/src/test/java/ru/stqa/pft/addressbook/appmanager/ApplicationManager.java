@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -56,6 +57,7 @@ public class ApplicationManager {
         } else {
             DesiredCapabilities a = new DesiredCapabilities();
             a.setBrowserName(browser);
+            a.setPlatform(Platform.LINUX);
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), a);
         }
         wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
